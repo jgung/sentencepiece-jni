@@ -1,15 +1,9 @@
 package com.github.google.sentencepiece;
 
-import java.io.IOException;
-
 class SentencePieceJNI {
 
     static {
-        try {
-            System.load(NativeLibLoader.createTempFileFromResource("/" + System.mapLibraryName("sentencepiece_jni")));
-        } catch (IOException e) {
-            throw new UnsatisfiedLinkError(e.getMessage());
-        }
+        NativeLibrary.load();
     }
 
     static native long sppCtor();

@@ -1,15 +1,12 @@
 package com.github.google.sentencepiece;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 
 public class SentencePieceProcessorTest {
 
@@ -17,13 +14,15 @@ public class SentencePieceProcessorTest {
     private SentencePieceProcessor jasp;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         sp = new SentencePieceProcessor();
         jasp = new SentencePieceProcessor();
-        sp.load("./test_model.model");
-        jasp.load("./test_ja_model.model");
-        sp.loadFromSerializedProto(Files.readAllBytes(Paths.get("test_model.model")));
-        jasp.loadFromSerializedProto(Files.readAllBytes(Paths.get("test_ja_model.model")));
+        String modelPath = Objects.requireNonNull(getClass().getClassLoader()
+            .getResource("test_model.model")).getPath();
+        String jaModelPath = Objects.requireNonNull(getClass().getClassLoader()
+            .getResource("test_ja_model.model")).getPath();
+        sp.load(modelPath);
+        jasp.load(jaModelPath);
     }
 
     @After
